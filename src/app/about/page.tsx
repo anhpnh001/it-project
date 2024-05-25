@@ -75,12 +75,10 @@ export default function about() {
         </div>
       </div>
       <div className="flex items-center justify-center p-8">
-        {/* Repeat this structure for each individual */}
         <div className="flex items-center justify-between w-full gap-16">
-          {/* Individual Profile Section */}
           <div className="flex flex-col items-center w-1/2">
             <Image
-              src="/undraw_male_avatar_g98d.svg" // Replace with actual path
+              src="/undraw_male_avatar_g98d.svg" 
               alt="Profile image of Phan Ngoc Hoàng Anh"
               width={300}
               height={300}
@@ -90,7 +88,7 @@ export default function about() {
           </div>
           <div className="flex flex-col items-center w-1/2">
             <Image
-              src="/undraw_pic_profile_re_7g2h.svg" // Replace with actual path
+              src="/undraw_pic_profile_re_7g2h.svg" 
               alt="Profile image of Nguyễn Minh Mẫn"
               width={300}
               height={300}
@@ -100,7 +98,6 @@ export default function about() {
           </div>
         </div>
       </div>
-      {/* Additional Information Section */}
       <div className="flex flex-col items-center justify-center p-8">
         <p className="text-center">
           Here at [Your Organization], we are committed to fostering talent and
