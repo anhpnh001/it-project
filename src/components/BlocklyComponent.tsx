@@ -2,11 +2,14 @@
 import * as Blockly from 'blockly'
 import React, { useRef, useEffect } from 'react'
 
-const BlocklyComponent: React.FC = () => {
+export default function BlocklyComponent() {
   const blocklyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (blocklyRef.current) {
+      Blockly.utils.colour.setHsvSaturation(0.6)
+      Blockly.utils.colour.setHsvValue(0.8)
+
       const workspace = Blockly.inject(blocklyRef.current, {
         toolbox: {
           kind: 'categoryToolbox',
@@ -14,6 +17,7 @@ const BlocklyComponent: React.FC = () => {
             {
               kind: 'category',
               name: 'Logic',
+              colour: '#5C81A6',
               contents: [
                 {
                   kind: 'block',
@@ -48,6 +52,7 @@ const BlocklyComponent: React.FC = () => {
             {
               kind: 'category',
               name: 'Loops',
+              colour: '#5CA65C',
               contents: [
                 {
                   kind: 'block',
@@ -74,6 +79,7 @@ const BlocklyComponent: React.FC = () => {
             {
               kind: 'category',
               name: 'Math',
+              colour: '#5C68A6',
               contents: [
                 {
                   kind: 'block',
@@ -129,10 +135,10 @@ const BlocklyComponent: React.FC = () => {
                 },
               ],
             },
-            // Text
             {
               kind: 'category',
               name: 'Text',
+              colour: '#5CA68D',
               contents: [
                 {
                   kind: 'block',
@@ -194,7 +200,90 @@ const BlocklyComponent: React.FC = () => {
             },
             {
               kind: 'category',
+              name: 'Lists',
+              colour: '#745CA6',
+              contents: [
+                {
+                  kind: 'block',
+                  type: 'lists_create_empty',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_create_with',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_repeat',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_length',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_isEmpty',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_indexOf',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_getIndex',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_setIndex',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_getSublist',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_split',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_sort',
+                },
+                {
+                  kind: 'block',
+                  type: 'lists_reverse',
+                },
+              ],
+            },
+            {
+              kind: 'category',
+              name: 'Functions',
+              colour: '#9A5CA6',
+              contents: [
+                {
+                  kind: 'block',
+                  type: 'procedures_defreturn',
+                },
+                {
+                  kind: 'block',
+                  type: 'procedures_defnoreturn',
+                },
+                {
+                  kind: 'block',
+                  type: 'procedures_callreturn',
+                },
+                {
+                  kind: 'block',
+                  type: 'procedures_callnoreturn',
+                },
+                {
+                  kind: 'block',
+                  type: 'procedures_ifreturn',
+                },
+              ],
+            },
+            {
+              kind: 'category',
               name: 'Variables',
+              colour: '#A65C5C',
               contents: [
                 // Create variable... button
                 {
@@ -205,6 +294,20 @@ const BlocklyComponent: React.FC = () => {
               ],
             },
           ],
+        },
+        grid: {
+          spacing: 20,
+          length: 3,
+          colour: 'transparent',
+          snap: true,
+        },
+        zoom: {
+          controls: true,
+          wheel: true,
+          startScale: 1.0,
+          maxScale: 3,
+          minScale: 0.3,
+          scaleSpeed: 1.2,
         },
         scrollbars: true,
         trashcan: true,
@@ -228,7 +331,5 @@ const BlocklyComponent: React.FC = () => {
     }
   }, [])
 
-  return <div ref={blocklyRef} style={{ height: '480px', width: '100%' }} />
+  return <div ref={blocklyRef} style={{ height: '840px', width: '100%' }} />
 }
-
-export default BlocklyComponent
