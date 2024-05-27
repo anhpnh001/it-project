@@ -1,7 +1,6 @@
 'use client'
 import * as Blockly from 'blockly'
 import BlocklyComponent from '@/components/BlocklyComponent'
-import toast, { Toaster } from 'react-hot-toast'
 
 export default function Revision() {
   const testExpression = () => {
@@ -25,22 +24,21 @@ export default function Revision() {
 
         // Check if the structure matches 5 > 3
         if (leftNumber === 5 && rightNumber === 3 && operator === 'GT') {
-          toast.success('The expression is correct.')
+          alert('Correct! 5 is greater than 3.')
         } else {
-          toast.error('The expression is incorrect.')
+          alert('Incorrect, try again.')
         }
       } else {
-        toast.error('Please connect both inputs.')
+        alert('Please ensure both sides of the comparison are connected.')
       }
     } else {
-      toast.error('Please add a comparison block.')
+      alert('Please create a comparison using the blocks.')
     }
   }
 
   return (
     <>
       <BlocklyComponent />
-      <Toaster />
       <button onClick={testExpression}>Test Expression</button>
     </>
   )
