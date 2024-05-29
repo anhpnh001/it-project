@@ -2,6 +2,12 @@
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import { FaGoogle, FaFacebook } from 'react-icons/fa'
+import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
+import React, { useEffect } from 'react';
+import axios from 'axios';
+
+
 // import { useForm } from 'react-hook-form'
 
 // import { zodResolver } from '@hookform/resolvers/zod'
@@ -20,13 +26,46 @@ import { FaGoogle, FaFacebook } from 'react-icons/fa'
 //   email: z.string().email(),
 //   password: z.string().min(8),
 // })
+export default function login() {
 
-export default function Login() {
+  const router = useRouter();
+  const [user, setUser] = React.useState({
+    email: "",
+    password: "",
+
+  })
+  const [loading, setLoading] = React.useState(false);
+
+
+  const onLogin = async (event:any) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const response = await axios.post("api/users/login", user);
+      console.log("login success", response.data);
+      toast.success("Successfully logged in!");
+      router.push('/profile');
+    }catch (error: any) {
+      console.log("login error", error.message);
+      toast.error("failed to login", error.message);
+    }finally {
+      setLoading(false);
+    }
+   
+  }
+
+  // useEffect(() => {
+  //   if (user.email.length > 0 && user.password.length > 0) {
+  //     setButtonDisabled(false);
+  //   } else {
+  //     setButtonDisabled(true);
+  //   }
+  // }, [user]);
   //   const form = useForm({
   //     resolver: zodResolver(formSchema),
   //   })
   return (
-    <main className="flex-1 flex items-center justify-center">
+    <main className="flex-1 flex items-center justify-center" >
       <div className="flex flex-col gap-4 w-80">
         <h1 className="text-4xl font-bold text-center">Login</h1>
         <form className="flex flex-col gap-4">
@@ -35,7 +74,10 @@ export default function Login() {
               Email
             </label>
             <input
+              id='email'
               type="email"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
               placeholder="Email"
               className="p-2 border border-gray-300 rounded-md"
             />
@@ -45,6 +87,9 @@ export default function Login() {
               Password
             </label>
             <input
+              id='password'
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
               type="password"
               placeholder="Password"
               className="p-2 border border-gray-300 rounded-md"
@@ -58,7 +103,7 @@ export default function Login() {
           </Link>
 
           <button
-            type="submit"
+            onClick={onLogin}
             className={buttonVariants({ variant: 'default' })}
           >
             Login

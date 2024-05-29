@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en"  suppressHydrationWarning={true}>
       <body className={(inter.className, 'flex flex-col min-h-screen')}>
         <nav className="bg-white flex justify-between container py-4 sticky top-0">
           <Link href="/" passHref>
@@ -39,14 +39,14 @@ export default function RootLayout({
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link href="/docs" legacyBehavior passHref>
+                <Link href="/" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Home
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/docs" legacyBehavior passHref>
+                <Link href="/courses" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Courses
                   </NavigationMenuLink>
@@ -60,14 +60,14 @@ export default function RootLayout({
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/docs" legacyBehavior passHref>
+                <Link href="/revision" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Revision
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/docs" legacyBehavior passHref>
+                <Link href="/about" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     About
                   </NavigationMenuLink>
@@ -75,7 +75,7 @@ export default function RootLayout({
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          <Link href={''} className={buttonVariants({ variant: 'default' })}>
+          <Link href={'/login'} className={buttonVariants({ variant: 'default' })}>
             Login
           </Link>
         </nav>
