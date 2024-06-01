@@ -35,7 +35,7 @@ function page() {
           <ul className="w-full">
             <li className="flex p-4 border-t border-gray-300">
               <Link
-                href="/account-settings"
+                href="/profile"
                 className="flex items-center text-gray-500"
               >
                 <FaUser className="mr-2 text-primary" />
@@ -62,7 +62,7 @@ function page() {
             </li>
             <li className="flex p-4 border-t border-gray-300">
               <Link
-                href="/account-settings"
+                href="/login"
                 className="flex items-center text-gray-500"
               >
                 <FaSignOutAlt className="mr-2 text-primary" />

@@ -14,8 +14,33 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, Trash2 } from "lucide-react";
+import { useState, useRef } from 'react';
+// Remove the duplicate import statement for 'Image'
 
 export default function profile() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [photoUrl, setPhotoUrl] = useState('/undraw_pic_profile_re_7g2h.svg');
+  const handleChangePhoto = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Open file input dialog
+    }
+  };
+
+  const handleFileChange = (event: any) => {
+    const file = event.target.files?.[0]; // Add null check
+    if (file && file.type.startsWith('image/')) {
+      const url = URL.createObjectURL(file);
+      setPhotoUrl(url); // Set the local URL for preview
+    }
+  };
+
+  const handleDeletePhoto = () => {
+    setPhotoUrl('/undraw_pic_profile_re_7g2h.svg'); // Reset to default or clear
+  };
+
+  
+
+
   return (
     <main className="container mx-auto p-8">
       <div className="bg-white shadow-md rounded px-10 pt-6 pb-8 mb-4">
@@ -25,20 +50,31 @@ export default function profile() {
             Profile Photo
           </label>
           <div className="flex items-center">
-            <div className="w-24 h-24 mr-4">
+            <div className="w-32 h-32 mr-4">
               <Image
-                src="/undraw_pic_profile_re_7g2h.svg"
+                src={photoUrl}
                 alt="Profile Photo"
-                width={96}
-                height={96}
+                width={128}
+                height={128}
                 className="rounded-full"
               />
             </div>
-            <div className="mx-4 flex items-center gap-2 ">
-              <button className="bg-black hover:bg-gray-800  text-white font-bold mx-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <div className="mx-4 flex items-center gap-2">
+              <input
+                ref={fileInputRef}
+                type="file"
+                onChange={handleFileChange}
+                className="hidden"
+                accept="image/*"
+                title="Profile Photo"
+                placeholder="Choose an image"
+              />
+              <button className="bg-black hover:bg-gray-800 text-white font-bold mx-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                onClick={handleChangePhoto}>
                 Change Photo
               </button>
-              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2  px-4 rounded flex items-center focus:outline-none focus:shadow-outline">
+              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center focus:outline-none focus:shadow-outline"
+                onClick={handleDeletePhoto}>
                 <Trash2 className="mr-2" /> Delete
               </button>
             </div>

@@ -16,6 +16,10 @@ import {
 } from '@/components/ui/navigation-menu'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
+//import useEffects from 'next/
+import { useEffect } from 'react';
+import { useState } from 'react';
+import Authprovider from '@/components/Authprovider/Authprovider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,9 +33,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
     <html lang="en"  suppressHydrationWarning={true}>
       <body className={(inter.className, 'flex flex-col min-h-screen')}>
+        <Authprovider>
         <nav className="bg-white flex justify-between container py-4 sticky top-0">
           <Link href="/" passHref>
             <Image src="/logoipsum-332.svg" alt="Logo" width={64} height={64} />
@@ -80,6 +86,7 @@ export default function RootLayout({
           </Link>
         </nav>
         {children}
+        </Authprovider>
       </body>
     </html>
   )

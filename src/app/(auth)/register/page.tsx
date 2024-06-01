@@ -7,6 +7,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 // import { useForm } from 'react-hook-form'
 
 // import { zodResolver } from '@hookform/resolvers/zod'
@@ -29,21 +30,21 @@ import { toast } from "react-hot-toast";
 export default function Register() {
   const router = useRouter();
   const [user, setUser] = React.useState({
-    
+
     email: "",
     password: "",
     username: "",
   })
   const [loading, setLoading] = React.useState(false);
 
-  const onRegister = async (event:any) => {
+  const onRegister = async (event: any) => {
     console.log("A")
     event.preventDefault();
     try {
       setLoading(true);
       const response = await axios.post("/api/users/register", user);
       console.log("register success", response.data);
-      await router.push('/login'); 
+      await router.push('/login');
     } catch (error: any) {
       console.log("register failed", error.message);
       toast.error(error.message);
@@ -51,6 +52,7 @@ export default function Register() {
       setLoading(false);
     }
   };
+  
   // useEffect(() => {
   //   if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
   //     setButtonDisabled(false);
@@ -131,13 +133,10 @@ export default function Register() {
         </span>
         <span className="text-sm text-gray-500 text-center">or</span>
         <div className="flex flex-col gap-4">
-          <button className={buttonVariants({ variant: 'outline' })}>
+          <button onClick={() => signIn('google')} className={buttonVariants({ variant: 'outline' })}>
             <FaGoogle className="mr-2" />
+            
             Sign in with Google
-          </button>
-          <button className={buttonVariants({ variant: 'outline' })}>
-            <FaFacebook className="mr-2" />
-            Sign in with Facebook
           </button>
         </div>
       </div>

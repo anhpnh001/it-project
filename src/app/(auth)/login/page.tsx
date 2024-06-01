@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { signIn, useSession } from "next-auth/react";
+import NextAuth from "next-auth";
 
 
 // import { useForm } from 'react-hook-form'
@@ -28,30 +30,33 @@ import axios from 'axios';
 // })
 export default function login() {
 
+
+  const session = useSession();
+  console.log(session);
   const router = useRouter();
   const [user, setUser] = React.useState({
     email: "",
     password: "",
-
   })
   const [loading, setLoading] = React.useState(false);
 
 
-  const onLogin = async (event:any) => {
+  const onLogin = async (event: any) => {
     event.preventDefault();
     try {
       setLoading(true);
       const response = await axios.post("api/users/login", user);
+      localStorage.setItem('token', response.data.token);
       console.log("login success", response.data);
       toast.success("Successfully logged in!");
-      router.push('/profile');
-    }catch (error: any) {
+      router.push('/courses');
+    } catch (error: any) {
       console.log("login error", error.message);
       toast.error("failed to login", error.message);
-    }finally {
+    } finally {
       setLoading(false);
     }
-   
+
   }
 
   // useEffect(() => {
@@ -117,13 +122,12 @@ export default function login() {
         </span>
         <span className="text-sm text-gray-500 text-center">or</span>
         <div className="flex flex-col gap-4">
-          <button className={buttonVariants({ variant: 'outline' })}>
+          <button
+            type="submit"
+            onClick={(e) => { e.preventDefault(); signIn('google'); }} className={buttonVariants({ variant: 'outline' })}>
             <FaGoogle className="mr-2" />
+
             Sign in with Google
-          </button>
-          <button className={buttonVariants({ variant: 'outline' })}>
-            <FaFacebook className="mr-2" />
-            Sign in with Facebook
           </button>
         </div>
       </div>
