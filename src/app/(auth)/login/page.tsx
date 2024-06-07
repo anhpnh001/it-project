@@ -59,17 +59,8 @@ export default function login() {
 
   }
 
-  // useEffect(() => {
-  //   if (user.email.length > 0 && user.password.length > 0) {
-  //     setButtonDisabled(false);
-  //   } else {
-  //     setButtonDisabled(true);
-  //   }
-  // }, [user]);
-  //   const form = useForm({
-  //     resolver: zodResolver(formSchema),
-  //   })
   return (
+    
     <main className="flex-1 flex items-center justify-center" >
       <div className="flex flex-col gap-4 w-80">
         <h1 className="text-4xl font-bold text-center">Login</h1>

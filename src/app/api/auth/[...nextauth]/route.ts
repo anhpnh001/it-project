@@ -26,12 +26,17 @@ const authOptions: NextAuthOptions = {
   },
   callbacks: {
     redirect: async ({ url, baseUrl }) => {
+      // Redirect users to the courses page by default
       return baseUrl + '/courses';
-    }
+    },
+    // signOut: async ({ token, url }) => {
+    //   // Perform any custom action on sign out, like logging or cleanup
+    //   console.log('User signed out', token);
+    //   // Redirect to homepage or custom page after logout
+    //   return url || '/'; // Redirect to the home page after logout
+    // }
   },
-
 };
-
 
 export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
@@ -50,4 +55,3 @@ export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 };
-

@@ -96,7 +96,7 @@ function page() {
                 </div>
                 <div className="flex gap-2 p-2 border-t border-gray-300 justify-end">
                   <Link
-                    href="/course"
+                    href="/lesson"
                     className="text-primary text-sm font-bold"
                   >
                     Continue
@@ -124,7 +124,7 @@ function page() {
                 </div>
                 <div className="flex gap-2 p-2 border-t border-gray-300 justify-end">
                   <Link
-                    href="/course"
+                    href="/lesson"
                     className="text-primary text-sm font-bold"
                   >
                     Continue
@@ -152,7 +152,7 @@ function page() {
                 </div>
                 <div className="flex gap-2 p-2 border-t border-gray-300 justify-end">
                   <Link
-                    href="/course"
+                    href="/lesson"
                     className="text-primary text-sm font-bold"
                   >
                     Continue
@@ -185,7 +185,7 @@ function page() {
                 <div className="flex gap-2 p-2 border-t border-gray-300 justify-between">
                   <span className="text-gray-500 text-sm">999.000 VND</span>
                   <Link
-                    href="/course"
+                    href="/lesson"
                     className="text-primary text-sm font-bold"
                   >
                     Enroll Now
@@ -218,7 +218,7 @@ function page() {
                 <div className="flex gap-2 p-2 border-t border-gray-300 justify-between">
                   <span className="text-gray-500 text-sm">999.000 VND</span>
                   <Link
-                    href="/course"
+                    href="/lesson"
                     className="text-primary text-sm font-bold"
                   >
                     Enroll Now
@@ -251,7 +251,7 @@ function page() {
                 <div className="flex gap-2 p-2 border-t border-gray-300 justify-between">
                   <span className="text-gray-500 text-sm">999.000 VND</span>
                   <Link
-                    href="/course"
+                    href="/lesson"
                     className="text-primary text-sm font-bold"
                   >
                     Enroll No
