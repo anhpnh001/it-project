@@ -1,7 +1,7 @@
 import { connect } from '../../../dbConfig/dbConfig';
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextAuthOptions } from "next-auth";
 
@@ -22,20 +22,21 @@ const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   pages: {
-    signIn: '/courses',  // Redirect to '/courses' after successful sign-in
+    signIn: '/login',
+    signOut: '/logout' // Redirect to '/courses' after successful sign-in
   },
   callbacks: {
-    redirect: async ({ url, baseUrl }) => {
-      // Redirect users to the courses page by default
-      return baseUrl + '/courses';
+    redirect: async ({ url, baseUrl, session }: { url: string; baseUrl: string; session?: Session }) => {
+      // Check if it's a sign-out action
+      if (url === baseUrl + '/logout') {
+        // Redirect to '/courses' after successful sign-out
+        return baseUrl + '/';
+      }
+      // Redirect users to the login page by default (e.g., after sign-in)
+      return baseUrl + '/login';
     },
-    // signOut: async ({ token, url }) => {
-    //   // Perform any custom action on sign out, like logging or cleanup
-    //   console.log('User signed out', token);
-    //   // Redirect to homepage or custom page after logout
-    //   return url || '/'; // Redirect to the home page after logout
-    // }
-  },
+  }
+
 };
 
 export const GET = async (req: NextApiRequest, res: NextApiResponse) => {

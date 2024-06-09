@@ -1,16 +1,15 @@
-"use client"
-
 import React from 'react';
 import { SessionProvider } from 'next-auth/react';
-import { Session } from 'inspector';
+import { UserProvider } from '@/components/UserContext'; // Import UserProvider from the file where it is defined
 
-
-const  Authprovider = ({children}: {children: React.ReactNode}) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionProvider>
-        {children} 
+      <UserProvider> {/* Wrap children within UserProvider */}
+        {children}
+      </UserProvider>
     </SessionProvider>
-  )
+  );
 }
 
-export default Authprovider;
+export default AuthProvider;

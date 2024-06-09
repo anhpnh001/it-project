@@ -1,96 +1,82 @@
-'use client'
-import Link from 'next/link';
 import Image from 'next/image';
 import {
     NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
     navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
+} from '@/components/ui/navigation-menu';
 import { buttonVariants } from './ui/button';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-const MainNavigation = () => {
-    
-    const { data: session } = useSession();
-    console.log(session);
-    const [loggedIn, setLoggedIn] = useState(false);
 
-    // useEffect(() => {
-    //     if (status === 'authenticated') {
-    //         setLoggedIn(true);
-    //     } else {
-    //         setLoggedIn(false);
-    //     }
-    // }, [status]);
+const MainNavigation: React.FC = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        console.log('Checking auth token:', token); // Add this to check what's retrieved
+        setIsLoggedIn(!!token);
+    }, []);
+    
+    const handleLogout = async () => {
+        const response = await fetch('/api/logout', { method: 'POST' });
+        console.log('Logout response:', response); // Check the response
+        if (response.ok) {
+            localStorage.removeItem('authToken');
+            setIsLoggedIn(false);
+            window.location.href = '/';
+        } else {
+            console.error('Failed to log out');
+        }
+    };
+    
+    const handleSignIn = () => {
+        window.location.href = '/login'; // Redirect to login page
+    };
 
     return (
         <nav className="bg-white flex justify-between container py-4 sticky top-0">
-            <Link href="/" passHref>
-                <Image src="/logoipsum-332.svg" alt="Logo" width={64} height={64} />
-            </Link>
+            <Image src="/logoipsum-332.svg" alt="Logo" width={64} height={64} style={{ cursor: 'pointer' }} onClick={() => window.location.href = '/'}/>
             <NavigationMenu>
                 <NavigationMenuList>
-                    <NavigationMenuItem>
-                        <Link href="/" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Home
-                            </NavigationMenuLink>
-                        </Link>
+                    <NavigationMenuItem onClick={() => window.location.href = '/'}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Home
+                        </NavigationMenuLink>
                     </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <Link href="/courses" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Courses
-                            </NavigationMenuLink>
-                        </Link>
+                    <NavigationMenuItem onClick={() => window.location.href = '/courses'}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Courses
+                        </NavigationMenuLink>
                     </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <Link href="/docs" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Competition
-                            </NavigationMenuLink>
-                        </Link>
+                    <NavigationMenuItem onClick={() => window.location.href = '/docs'}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Competition
+                        </NavigationMenuLink>
                     </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <Link href="/revision" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Revision
-                            </NavigationMenuLink>
-                        </Link>
+                    <NavigationMenuItem onClick={() => window.location.href = '/revision'}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Revision
+                        </NavigationMenuLink>
                     </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <Link href="/about" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                About
-                            </NavigationMenuLink>
-                        </Link>
+                    <NavigationMenuItem onClick={() => window.location.href = '/about'}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            About
+                        </NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
-            {session ? (
-                <button
-                    className={buttonVariants({ variant: 'default' })}
-                    onClick={() => signOut()}
-                >
-                    Sign out
-                </button>
-            ) : (
-                <button
-                    className={buttonVariants({ variant: 'default' })}
-                    onClick={() => signIn()}
-                >
-                    Sign in
-                </button>
-                
-            )}
-            
-            
+            <div className="flex space-x-4">
+                {!isLoggedIn ? (
+                    <button className={buttonVariants({ variant: 'outline' })} onClick={handleSignIn}>
+                        Sign In
+                    </button>
+                ) : (
+                    <button className={buttonVariants({ variant: 'outline' })} onClick={handleLogout}>
+                        Sign Out
+                    </button>
+                )}
+            </div>
         </nav>
     );
 };
