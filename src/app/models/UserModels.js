@@ -15,6 +15,15 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a password'],
     },
+    role: {
+        type: String,
+        enum: ['Student', 'Teacher', 'Admin'],
+        default: 'Student',
+    },
+    isActive: {
+        type: Boolean,
+        default: true,
+    },
     isVerfiedd:{
         type: Boolean,
         default: false,

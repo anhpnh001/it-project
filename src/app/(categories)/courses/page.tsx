@@ -4,10 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaBook, FaClock, FaUser, FaHistory, FaSignOutAlt } from 'react-icons/fa';
 import { FaUsers, FaBookOpen, FaChartBar, FaPlug, FaPalette, FaServer, FaFileAlt } from 'react-icons/fa';
-import Profile from '@/app/profile/page'; // Import EditProfile from its file path
-import MyCourses from '@/components/CoursesList';       // Import MyCourses from its file path
-// import PurchaseHistory from '@/components/PurchaseHistory';
-// Define the props for each link component
+import Profile from '@/app/profile/page';
+import MyCourses from '@/components/CoursesList';     
+
 interface NavLinkProps {
   href: string;
   label: string;
@@ -15,7 +14,7 @@ interface NavLinkProps {
   onClick: () => void;
 }
 
-// Sidebar navigation link component
+
 const NavLink: React.FC<NavLinkProps> = ({ href, label, Icon, onClick }: NavLinkProps) => (
   <li className="flex p-4 border-t border-gray-300">
     <Link href={href}>
@@ -27,7 +26,6 @@ const NavLink: React.FC<NavLinkProps> = ({ href, label, Icon, onClick }: NavLink
   </li>
 );
 
-// Main Courses Page Component
 const CoursesPage: React.FC = () => {
   const [activePanel, setActivePanel] = useState<string>('myCourses');
 
@@ -35,15 +33,13 @@ const CoursesPage: React.FC = () => {
     setActivePanel(panel);
   };
 
-  // Function to render content based on the active panel
   const renderContent = (): ReactElement => {
     switch (activePanel) {
       case 'profile':
         return <Profile />;
       case 'myCourses':
         return <MyCourses />;
-      // case 'purchaseHistory':
-      //   return <PurchaseHelpurchase clickhisDEltory />;
+
       default:
         return <Profile/>;
     }
@@ -80,9 +76,6 @@ const CoursesPage: React.FC = () => {
   );
 };
 
-// Placeholder components for each panel
-// const EditProfile: React.FC = () => <div>Edit Profile Panel</div>;
-// const MyCourses: React.FC = () => <div>My Courses Panel</div>;
-// const PurchaseHistory: React.FC = () => <div>Purchase History Panel</div>;
+
 
 export default CoursesPage;
