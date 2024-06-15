@@ -7,12 +7,14 @@ connect()
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json()
-    const { title, description, categories } = reqBody
+    const { title, description,price,categories} = reqBody
     console.log(reqBody)
 
+  
     const newCourse = new Course({
       title,
       description,
+      price,
       categories,
     })
     await newCourse.save()

@@ -5,7 +5,13 @@ import { buttonVariants } from '@/components/ui/button'
 import toast, { Toaster } from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 
-export default function Exercise({ params }) {
+interface CourseProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function Exercise({ params }: CourseProps) {
   const [exercise, setExercise] = useState({
     title: '',
     content: '',
