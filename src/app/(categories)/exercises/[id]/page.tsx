@@ -11,6 +11,7 @@ export default function Exercise({ params }) {
     content: '',
     blocklyXML: '',
     courses: [],
+    diffculty: 1,
   })
 
   function getWorkspaceXML() {
@@ -68,13 +69,33 @@ export default function Exercise({ params }) {
           }}
         >
           <div className="form-group">
-            <h1 id="title" className="w-full px-4 py-2 border">
+            <label htmlFor="title">Tiêu đề</label>
+            <h1 id="title" className="w-full px-4 py-2 border mt-1">
               {exercise.title}
             </h1>
           </div>
           <div className="form-group">
-            <p id="content" className="w-full px-4 py-2 border h-48">
-              {exercise.content}
+            <label htmlFor="content">Nội dung</label>
+            <p
+              id="content"
+              className="w-full px-4 py-2 border mt-1 h-48"
+              dangerouslySetInnerHTML={{ __html: exercise.content }}
+            ></p>
+          </div>
+          <div className="form-group">
+            <label htmlFor="difficulty">Độ khó</label>
+            <p
+              id="difficulty"
+              className="w-full px-4 py-2 border mt-1"
+              onChange={(e) =>
+                setExercise({ ...exercise, difficulty: e.target.value })
+              }
+            >
+              {exercise.diffculty === 1
+                ? 'Dễ'
+                : exercise.diffculty === 2
+                ? 'Trung bình'
+                : 'Khó'}
             </p>
           </div>
           <button

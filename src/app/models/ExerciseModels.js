@@ -21,9 +21,9 @@ const ExerciseSchema = new mongoose.Schema({
     },
   ],
   difficulty: {
-    type: String,
-    enum: ['easy', 'medium', 'hard'],
-    default: 'easy',
+    type: Number,
+    enum: [1, 2, 3],
+    default: 1,
   },
   createdAt: {
     type: Date,
