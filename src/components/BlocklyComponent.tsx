@@ -283,15 +283,26 @@ export default function BlocklyComponent() {
             {
               kind: 'category',
               name: 'Variables',
-              colour: '#A65C5C',
+              colour: '#A65C81',
               contents: [
-                // Create variable... button
                 {
-                  kind: 'button',
-                  text: 'Create variable...',
-                  callbackKey: 'CREATE_VARIABLE' as any,
-                } as any,
+                  kind: 'block',
+                  type: 'variables_get',
+                },
+                {
+                  kind: 'block',
+                  type: 'variables_set',
+                },
+                {
+                  kind: 'block',
+                  type: 'variables_declare',
+                },
+                {
+                  kind: 'block',
+                  type: 'variables_change',
+                },
               ],
+              custom: 'VARIABLE',
             },
           ],
         },

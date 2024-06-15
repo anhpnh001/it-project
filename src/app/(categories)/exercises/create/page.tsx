@@ -2,17 +2,14 @@
 import * as Blockly from 'blockly'
 import BlocklyComponent from '@/components/BlocklyComponent'
 import { buttonVariants } from '@/components/ui/button'
-import toast, { Toaster } from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 
-export default function Exercise({ params }) {
+export default function Dashboard() {
   const [exercise, setExercise] = useState({
     title: '',
     content: '',
     blocklyXML: '',
-    courses: [],
   })
-
   function getWorkspaceXML() {
     const workspace = Blockly.getMainWorkspace()
     const xml = Blockly.Xml.workspaceToDom(workspace)
@@ -23,26 +20,22 @@ export default function Exercise({ params }) {
 
   useEffect(() => {
     if (exercise.blocklyXML !== '') {
+      createExercise()
     }
   }, [exercise.blocklyXML])
 
-  useEffect(() => {
-    fetchExercise()
-  }, [])
-
-  async function fetchExercise() {
-    const response = await fetch(`/api/exercises/${params.id}`)
-    const { data } = await response.json()
-    setExercise(data)
-  }
-
-  function checkExercise() {
-    const workspaceXML = getWorkspaceXML()
-    if (workspaceXML === exercise.blocklyXML) {
-      toast.success('Correct!')
-    } else {
-      toast.error('Incorrect!')
-    }
+  function createExercise() {
+    fetch('/api/exercises/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(exercise),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+      })
   }
 
   function removeUnwantedAttributes(xmlElement: Element) {
@@ -64,24 +57,40 @@ export default function Exercise({ params }) {
           className="form flex flex-col gap-4"
           onSubmit={(e) => {
             e.preventDefault()
-            checkExercise()
+            setExercise({
+              ...exercise,
+              blocklyXML: getWorkspaceXML(),
+            })
           }}
         >
           <div className="form-group">
-            <h1 id="title" className="w-full px-4 py-2 border">
-              {exercise.title}
-            </h1>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Title"
+              className="w-full px-4 py-2 border"
+              onChange={(e) =>
+                setExercise({ ...exercise, title: e.target.value })
+              }
+            />
           </div>
           <div className="form-group">
-            <p id="content" className="w-full px-4 py-2 border h-48">
-              {exercise.content}
-            </p>
+            <textarea
+              id="content"
+              name="content"
+              placeholder="Content"
+              className="w-full px-4 py-2 border h-48"
+              onChange={(e) =>
+                setExercise({ ...exercise, content: e.target.value })
+              }
+            />
           </div>
           <button
             type="submit"
             className={buttonVariants({ variant: 'default' })}
           >
-            Check
+            Create
           </button>
         </form>
       </div>
