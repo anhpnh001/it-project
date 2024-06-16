@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
 
 interface CourseProps {
   params: {
-    id: string;
-  };
+    id: string
+  }
 }
 
 export default function Exercise({ params }: CourseProps) {
@@ -17,7 +17,7 @@ export default function Exercise({ params }: CourseProps) {
     content: '',
     blocklyXML: '',
     courses: [],
-    diffculty: 1,
+    difficulty: 1,
   })
 
   function getWorkspaceXML() {
@@ -90,16 +90,10 @@ export default function Exercise({ params }: CourseProps) {
           </div>
           <div className="form-group">
             <label htmlFor="difficulty">Độ khó</label>
-            <p
-              id="difficulty"
-              className="w-full px-4 py-2 border mt-1"
-              onChange={(e) =>
-                setExercise({ ...exercise, difficulty: e.target.value })
-              }
-            >
-              {exercise.diffculty === 1
+            <p id="difficulty" className="w-full px-4 py-2 border mt-1">
+              {exercise.difficulty === 1
                 ? 'Dễ'
-                : exercise.diffculty === 2
+                : exercise.difficulty === 2
                 ? 'Trung bình'
                 : 'Khó'}
             </p>

@@ -1,5 +1,5 @@
 import { connect } from '@/app/dbConfig/dbConfig'
-import Exercise from '@/app/models/ExerciseModels'
+import Process from '@/app/models/ProcessModel'
 import { NextRequest, NextResponse } from 'next/server'
 connect()
 
@@ -7,17 +7,17 @@ export async function GET(request: NextRequest) {
   try {
     const id = request.url.split('/').pop()
 
-    const exercise = await Exercise.findById(id)
-    if (!exercise) {
+    const process = await Process.findById(id)
+    if (!process) {
       return NextResponse.json(
-        { message: 'Exercise not found' },
+        { message: 'Process not found' },
         { status: 404 }
       )
     }
     return NextResponse.json({
-      message: 'Exercise found',
+      message: 'Process found',
       success: true,
-      data: exercise,
+      data: process,
     })
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })

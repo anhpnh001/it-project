@@ -2,12 +2,12 @@
 import { buttonVariants } from '@/components/ui/button'
 import { FaGoogle, FaFacebook } from 'react-icons/fa'
 import router from 'next/router'
-import Link from "next/link";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { toast } from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import Link from 'next/link'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import { toast } from 'react-hot-toast'
+import { signIn } from 'next-auth/react'
 // import { useForm } from 'react-hook-form'
 
 // import { zodResolver } from '@hookform/resolvers/zod'
@@ -28,31 +28,30 @@ import { signIn } from "next-auth/react";
 // })
 
 export default function Register() {
-  const router = useRouter();
+  const router = useRouter()
   const [user, setUser] = React.useState({
-
-    email: "",
-    password: "",
-    username: "",
+    email: '',
+    password: '',
+    username: '',
   })
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false)
 
   const onRegister = async (event: any) => {
-    console.log("A")
-    event.preventDefault();
+    console.log('A')
+    event.preventDefault()
     try {
-      setLoading(true);
-      const response = await axios.post("/api/users/register", user);
-      console.log("register success", response.data);
-      await router.push('/login');
+      setLoading(true)
+      const response = await axios.post('/api/users/register', user)
+      console.log('register success', response.data)
+      await router.push('/login')
     } catch (error: any) {
-      console.log("register failed", error.message);
-      toast.error(error.message);
+      console.log('register failed', error.message)
+      toast.error(error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
-  
+  }
+
   // useEffect(() => {
   //   if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
   //     setButtonDisabled(false);
@@ -61,24 +60,21 @@ export default function Register() {
   //   }
   // }, [user]);
 
-
   return (
-    <main className="flex-1 flex items-center justify-center" >
+    <main className="flex-1 flex items-center justify-center">
       <div className="flex flex-col gap-4 w-80">
         <h1 className="text-4xl font-bold text-center">Register</h1>
-        <form className="flex flex-col gap-4"
-          onSubmit={onRegister}
-        >
+        <form className="flex flex-col gap-4" onSubmit={onRegister}>
           <div className="flex flex-col gap-2">
             <label htmlFor="username" className="text-sm text-gray-500">
               Username
             </label>
             <input
-              id='username'
+              id="username"
               value={user.username}
               onChange={(e) => setUser({ ...user, username: e.target.value })}
               type="text"
-              placeholder="username"
+              placeholder="Username"
               className="p-2 border border-gray-300 rounded-md"
             />
           </div>
@@ -87,7 +83,7 @@ export default function Register() {
               Email
             </label>
             <input
-              id='email'
+              id="email"
               value={user.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
               type="email"
@@ -100,7 +96,7 @@ export default function Register() {
               Password
             </label>
             <input
-              id='password'
+              id="password"
               type="password"
               value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
@@ -133,9 +129,11 @@ export default function Register() {
         </span>
         <span className="text-sm text-gray-500 text-center">or</span>
         <div className="flex flex-col gap-4">
-          <button onClick={() => signIn('google')} className={buttonVariants({ variant: 'outline' })}>
+          <button
+            onClick={() => signIn('google')}
+            className={buttonVariants({ variant: 'outline' })}
+          >
             <FaGoogle className="mr-2" />
-            
             Sign in with Google
           </button>
         </div>
