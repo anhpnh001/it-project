@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Course } from '@/app/mycourses/interface/page'; // Adjust the path as needed
 
