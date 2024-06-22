@@ -1,7 +1,6 @@
-'use client';
 import React, { useState, useEffect } from 'react';
-import UserItem from '@/app/users/[id]/page';
-import { User } from '@/app/users/[id]/page'; // Ensure this import path is correct
+import UserItem, { User } from '@/app/users/[id]/page';
+import axios from 'axios';
 
 const UserList: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -9,24 +8,33 @@ const UserList: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch('/api/user');
+                const result = await response.json();
+                console.log('Fetched data:', result);
+                
+                if (Array.isArray(result.data)) {
+                    setUsers(result.data);
+                } else {
+                    throw new Error('Fetched data is not an array');
+                }
+            } catch (error: any) {
+                console.error('Error fetching courses:', error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
         fetchUsers();
     }, []);
 
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch('/api/user');
-            const { data } = await response.json();
-            console.log('Fetched data:', data); // Debugging log
-            if (Array.isArray(data)) {
-                setUsers(data);
-            } else {
-                throw new Error('Fetched data is not an array');
-            }
-        } catch (error: any) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
+    const handleUpdateUser = (updatedUser: User) => {
+        setUsers(prevUsers => prevUsers.map(user => user.id === updatedUser.id ? updatedUser : user));
+    };
+
+    const handleDeleteUser = (userId: string) => {
+        setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
     };
 
     if (loading) {
@@ -34,18 +42,14 @@ const UserList: React.FC = () => {
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div>{error}</div>;
     }
 
     return (
-        <div className="users-list p-6 bg-gray-100">
-            {users.length > 0 ? (
-                users.map(user => (
-                    <UserItem key={user.id} user={user} />
-                ))
-            ) : (
-                <p>No users available.</p>
-            )}
+        <div>
+            {users.map(user => (
+                <UserItem key={user.id} user={user} onUpdate={handleUpdateUser} onDelete={handleDeleteUser} />
+            ))}
         </div>
     );
 };
